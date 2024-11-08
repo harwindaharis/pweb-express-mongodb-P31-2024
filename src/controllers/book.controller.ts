@@ -4,11 +4,28 @@ import BookService from "../services/book.service";
 export class BookController {
 	async addBook(req: Request, res: Response) {
 		try {
+			const { initialQty, qty } = req.body;
+
+			// Error handling qty
+			if (initialQty <= 0 || qty <= 0) {
+				return res.status(400).json({
+					status: "error",
+					message: "InitialQty and Qty should not be 0 or less",
+				});
+			}
+
+			if (qty > initialQty) {
+				return res.status(400).json({
+					status: "error",
+					message: "Qty should not be more than InitialQty",
+				});
+			}
+
 			const book = await BookService.addBook(req.body);
 
 			// res.status(201).json(book);
 
-			// sama aja kaya sblmnya, tp ini sesuai response formatnya
+			// response format
 			res.status(201).json({ status: "success", message: "Successfully add book", data: book });
 		} catch (error) {
 			if (error instanceof Error) {
