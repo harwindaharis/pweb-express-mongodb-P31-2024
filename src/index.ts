@@ -14,7 +14,7 @@ app.get("/", (req: Request, res: Response) => {
   const response = {
     status: "success",
     message: "Hello World",
-    date: date,
+    date: date.toDateString(),
   };  res.send(response);
 });
 
@@ -25,7 +25,4 @@ app.use("/book", bookrouter);
 const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Express is running on Port ${PORT}`);
-
-
-  
 });
