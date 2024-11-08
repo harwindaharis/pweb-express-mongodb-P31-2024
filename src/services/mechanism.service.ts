@@ -4,7 +4,7 @@ import Book from '../models/book.model';
 export class MechanismService {
   async borrowBook(bookId: string): Promise<number | null> {
     const book = await Book.findById(bookId);
-    if (book && book.qty > 1) {
+    if (book && book.qty > 0) {
       book.qty -= 1;
       await book.save();
       return book.qty;
